@@ -1,15 +1,16 @@
-import { useState } from 'react';
-
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
     searchiTunes,
 } from './searchSlice';
 import styles from './Search.module.css';
 import { Button, TextField } from '@mui/material';
+import { searchText, setSearchTerm } from './searchTermSlice';
+import { useState } from 'react';
 
 export function Search() {
+    const searchTerm = useAppSelector(searchText).value;
     const dispatch = useAppDispatch();
-    const [searchTerm, setSearchTerm] = useState('');
+    const [offset, setOffset] = useState(10);
 
     return (
         <div className="logo-wrapper">
@@ -25,15 +26,14 @@ export function Search() {
                     variant="outlined"
                     type="text"
                     placeholder="Search songs..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => dispatch(setSearchTerm(e.target.value))}
                 />
 
                 {/* Search button */}
                 <div className="search-btn-container">
                     <Button
                         variant="contained"
-                        onClick={() => dispatch(searchiTunes(searchTerm))}
+                        onClick={() => dispatch(searchiTunes(searchTerm, offset))}
 
                     >
                         Search

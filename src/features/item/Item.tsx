@@ -7,7 +7,6 @@ export function Item({ kind, artistName, trackName, artworkUrl100 }: any) {
     const searchResults = useAppSelector(selectSongs);
     const dispatch = useAppDispatch();
     const [songs, setIncrementAmount] = useState([]);
-    console.log(searchResults)
 
     return (
         <Card sx={{ display: "flex", width: 1, justifyContent: "space-between", boxShadow: 3 }}>

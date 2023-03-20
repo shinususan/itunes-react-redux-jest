@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { useAppSelector } from '../../app/hooks';
 import { AppThunk, RootState } from '../../app/store';
 import { fetchiTunesSongs } from './searchAPI';
+import { searchText } from './searchTermSlice';
 
 export interface searchState {
     value: Array<any>;
@@ -19,18 +21,18 @@ const initialState: searchState = {
 // typically used to make async requests.
 export const searchiTunesAsync = createAsyncThunk(
     'search',
-    async (searchTerm: string) => {
-        const response = await fetchiTunesSongs(searchTerm);
+    async (search: any) => {
+        const response = await fetchiTunesSongs(search.searchTerm, search.offset);
         // The value we return becomes the `fulfilled` action payload
         return response;
     }
 );
 
 export const searchiTunes =
-    (searchTerm: string=''): AppThunk =>
+    (searchTerm: string = '', offset: number = 0): AppThunk =>
         (dispatch, getState) => {
             if (searchTerm.length > 3) {
-                dispatch(searchiTunesAsync(searchTerm));
+                dispatch(searchiTunesAsync({ searchTerm, offset }));
             }
         };
 
@@ -53,7 +55,7 @@ export const searchSlice = createSlice({
             })
             .addCase(searchiTunesAsync.fulfilled, (state, action) => {
                 state.status = 'idle';
-                state.value = [...action.payload];
+                state.value.push(...action.payload)
             })
             .addCase(searchiTunesAsync.rejected, (state) => {
                 state.status = 'failed';
