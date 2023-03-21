@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { searchiTunes, selectSongs } from '../search/searchSlice';
-import styles from './List.module.css';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Grid } from '@mui/material';
 import { Item } from '../item/Item';

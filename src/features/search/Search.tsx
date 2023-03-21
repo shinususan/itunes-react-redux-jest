@@ -2,7 +2,6 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
     searchiTunes,
 } from './searchSlice';
-import styles from './Search.module.css';
 import { Button, TextField } from '@mui/material';
 import { searchText, setSearchTerm } from './searchTermSlice';
 import { useState } from 'react';
